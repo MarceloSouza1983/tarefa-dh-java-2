@@ -14,7 +14,7 @@ public class TestaFuncionario {
 		FuncionarioPessoaFisica func4 = new FuncionarioPessoaFisica("Marcos", "Avenida 9 de Julho", "GerentE", "666.333.333-66", "marcos@incognotous.com", "05/01/2015", 4, "213444261", 6500.00, "8:00 às 17:00");
 		FuncionarioPessoaFisica func5 = new FuncionarioPessoaFisica("João", "Avenida 9 de Julho", "advogado", "777.333.333-77", "joao@incognotous.com", "07/01/2017", 5,"233444299", 4200.40, "13:00 às 21:00");
 		
-		FuncionarioPessoaJuridica func6 = new FuncionarioPessoaJuridica("Diego", "Avenida 9 de Julho", "operador", "751.343.353-81", "diego@incognotous.com", "09/01/2018", 6, 10000.00, "13:00 às 21:00");
+		FuncionarioPessoaJuridica func6 = new FuncionarioPessoaJuridica("Diego", "Avenida 9 de Julho", "operador", "663.378.643-33", "751.343.1000", "diego@incognotous.com", "09/01/2018", 6, 10000.00, "13:00 às 21:00");
 		
 		
 		/*func1.trabalhar();
@@ -100,6 +100,11 @@ public class TestaFuncionario {
 		FuncionarioPessoaFisica func8 = new FuncionarioPessoaFisica("João", "Avenida 9 de Julho", "advogado", "777.333.333-77", "joao@incognotous.com", "07/01/2017", 5,"233444299", 1900.40, "13:00 às 21:00");
 		func8.consultarContraCheque();
 		
+		
+		func1.demitir(func8);
+	
+		
+		func1.demitir(func8);
 		
 		//FuncionarioPessoaJuridica funcpj7 = new FuncionarioPessoaJuridica("Gabriel", "Rua das Oliveiras", "supervisor", "345637655", "map.bastos@gmail.com", "21/08/2020", 3, 3500, "13:00 às 21:00");
 		

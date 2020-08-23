@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class FuncionarioPessoaFisica implements Funcionario { // extends FuncionarioPadrao
+public class FuncionarioPessoaFisica implements Funcionario {
 
 	private String nome, endereco, profissao, cpf, email, dataAdmissao, dataDemissao, nit;
 	private String horarioTrabalho;
@@ -98,7 +98,7 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 		}
 
 	}
-	
+
 	public void reajustarSalario(Funcionario funcionario, double valor, String data) {
 		if (getProfissao().equalsIgnoreCase("gerente")) {
 
@@ -113,7 +113,7 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 					String textoFormatado = String.format("%.2f", + salarioReajustado);
 					System.out.print(funcionario.getNome() + " seu novo salário será de R$" + textoFormatado + " a partir de " + data + "\n");
 					funcionario.alteraSalario(salarioReajustado);
-					
+
 				} else {
 
 					double salarioReajustado = funcionario.getSalario() + valor;
@@ -131,23 +131,46 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 		}
 	}
 
-	public void demitir(String cpfOrcnpj) {
+	public void demitir(Funcionario funcionario) {
 
-		if (getProfissao().equalsIgnoreCase("supervisor")) {
-			
+		if (funcionario.isFuncionarioAtivo() == true) {
+
+			LocalDate data = LocalDate.now();
+
+			if (getProfissao().equalsIgnoreCase("supervisor")) {
+
+				if (funcionario.getProfissao().equalsIgnoreCase("gerente") || funcionario.getProfissao().equalsIgnoreCase("supervisor")) {
+					System.out.println("Você não está autorizado a demitir Gerentes ou Supervisores.\n");
+				} else {
+
+					String dataFomatada = data.format(DateTimeFormatter.ofPattern("dd-MM-uuuu"));
+
+					System.out.print(funcionario.getNome() + " você será desligado do nosso quadro de colaboradores a partir de " + dataFomatada + "\n");
+					funcionario.alteraDataDemissao(dataFomatada);
+					funcionario.alteraStatus();
+
+				}
+				
+			} else if (getProfissao().equalsIgnoreCase("gerente")) {
+				
+				if (funcionario.getProfissao().equalsIgnoreCase("gerente")) {
+					System.out.println("Você não está autorizado a demitir outros Gerentes.\n");
+				} else {
+					
+					String dataFomatada = data.format(DateTimeFormatter.ofPattern("dd-MM-uuuu"));
+
+					System.out.print(funcionario.getNome() + " você será desligado do nosso quadro de colaboradores a partir de " + dataFomatada + "\n");
+					funcionario.alteraDataDemissao(dataFomatada);
+					funcionario.alteraStatus();
+				}
+
+			} else {
+				System.out.println(getNome() + " você não tem autorização para demitir funcionários.");
+			}
 		}
-		
-		if (getProfissao().equalsIgnoreCase("gerente") || getProfissao().equalsIgnoreCase("supervisor")) {
-			System.out.println("Sou " + getProfissao());
 
-			
+		System.out.println(getNome() + ", o funcionário " + funcionario.getNome() + " já se desligou da empresa.");
 
-
-		} else {
-			System.out.println(getNome() + " você não tem autorização para demitir funcionários.");
-		}
-
-		
 	}
 
 
@@ -213,13 +236,13 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 		if (getSalario() <= 1903.98) {
 			return salarioBruto = 0;
 		} else if (getSalario() <= 2826.65) {
-			return salarioBruto = getSalario() - (getSalario() * DESCONTO_INSS_FAIXA_BAIXA);
+			return salarioBruto = getSalario() - (getSalario() * DESCONTO_IRPF_FAIXA_BAIXA);
 		} else if (getSalario() <= 3751.05) {
-			return salarioBruto = getSalario() - (getSalario() * DESCONTO_INSS_FAIXA_MEDIA);
+			return salarioBruto = getSalario() - (getSalario() * DESCONTO_IRPF_FAIXA_MEDIA);
 		} else if (getSalario() <= 4664.68) {
-			return salarioBruto = getSalario() - (getSalario() * DESCONTO_INSS_FAIXA_ALTA);
+			return salarioBruto = getSalario() - (getSalario() * DESCONTO_IRPF_FAIXA_ALTA);
 		}	else {
-			return salarioBruto = getSalario() - (getSalario() * DESCONTO_INSS_FAIXA_SUPERALTA);
+			return salarioBruto = getSalario() - (getSalario() * DESCONTO_IRPF_FAIXA_SUPERALTA);
 		}
 
 	}
@@ -229,7 +252,6 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
-		// Convertendo String para LocalDate
 		LocalDate localDateFerias = LocalDate.parse(dataFerias, formatador);
 		LocalDate localDateAdmissao = LocalDate.parse(getDataAdmissao(), formatador);
 
@@ -393,6 +415,14 @@ public class FuncionarioPessoaFisica implements Funcionario { // extends Funcion
 		setSalario(valor);
 	}
 
-
+	@Override
+	public void alteraDataDemissao(String data) {
+		setDataDemissao(data);
+	}
+	
+	@Override
+	public void alteraStatus() {
+		this.funcionarioAtivo = false;
+	}
 
 }

@@ -22,5 +22,8 @@ public interface Funcionario {
 	public void voltarAoTrabalho();
 	
 	public void alteraSalario(double valor);
+	public void alteraDataDemissao(String data);
+	public void alteraStatus();
+	public boolean isFuncionarioAtivo();
 	
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class FuncionarioPessoaJuridica implements Funcionario { // extends FuncionarioPadrao
+public class FuncionarioPessoaJuridica implements Funcionario {
 
-	private String nome, endereco, profissao, cnpj, email, dataAdmissao, dataDemissao;
+	private String nome, endereco, profissao, cpf, cnpj, email, dataAdmissao, dataDemissao;
 	private String horarioTrabalho;
 	private boolean funcionarioAtivo, ferias;
 
@@ -23,7 +23,7 @@ public class FuncionarioPessoaJuridica implements Funcionario { // extends Funci
 	public static final double INSS_MEI = 0.97;
 	public static final double FGTS_MEI = 0.92;
 
-	public FuncionarioPessoaJuridica(String nome, String endereco, String profissao, String cnpj, String email, String dataAdmissao, int setor, double salario, String horarioTrabalho) {
+	public FuncionarioPessoaJuridica(String nome, String endereco, String profissao, String cpf, String cnpj, String email, String dataAdmissao, int setor, double salario, String horarioTrabalho) {
 		this.nome = nome;
 		this.endereco = endereco;
 		
@@ -33,6 +33,7 @@ public class FuncionarioPessoaJuridica implements Funcionario { // extends Funci
 			System.exit(1);
 		} else {
 		this.profissao = profissao;
+		this.cpf = cpf;
 		this.cnpj = cnpj;
 		this.email = email;
 		this.dataAdmissao = dataAdmissao;
@@ -188,9 +189,17 @@ public class FuncionarioPessoaJuridica implements Funcionario { // extends Funci
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
 	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 	public String getCnpj() {
-		return cnpj;
+		return cpf;
 	}
 
 	public void setCnpj(String cnpj) {
@@ -285,6 +294,15 @@ public class FuncionarioPessoaJuridica implements Funcionario { // extends Funci
 	public void alteraSalario(double valor) {
 		setSalario(valor);
 	}
-
+	
+	@Override
+	public void alteraDataDemissao(String data) {
+		setDataDemissao(data);
+	}
+	
+	@Override
+	public void alteraStatus() {
+		this.funcionarioAtivo = false;
+	}
 
 }
